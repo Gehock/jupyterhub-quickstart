@@ -325,7 +325,7 @@
                                     },
                                     {
                                         "name": "custom",
-                                        "mountPath": "/opt/app-root/custom"
+                                        "mountPath": "/opt/app-root/lib/python3.5/site-packages/notebook/static/custom"
                                     }
                                 ]
                             }
