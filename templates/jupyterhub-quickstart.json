@@ -47,6 +47,11 @@
             "required": false
         },
         {
+            "name": "JUPYTERHUB_CUSTOM_CSS",
+            "value": "",
+            "required": false
+        },
+        {
             "name": "DATABASE_PASSWORD",
             "generate": "expression",
             "from": "[a-zA-Z0-9]{16}",
@@ -147,6 +152,19 @@
             },
             "data": {
                 "jupyterhub_config.py": "${JUPYTERHUB_CONFIG}"
+            }
+        },
+        {
+            "kind": "ConfigMap",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${APPLICATION_NAME}-css",
+                "labels": {
+                    "app": "${APPLICATION_NAME}"
+                }
+            },
+            "data": {
+                "custom.css": "${JUPYTERHUB_CUSTOM_CSS}"
             }
         },
         {
@@ -304,6 +322,10 @@
                                     {
                                         "name": "config",
                                         "mountPath": "/opt/app-root/configs"
+                                    },
+                                    {
+                                        "name": "custom",
+                                        "mountPath": "/opt/app-root/custom"
                                     }
                                 ]
                             }
@@ -313,6 +335,13 @@
                                 "name": "config",
                                 "configMap": {
                                     "name": "${APPLICATION_NAME}-cfg",
+                                    "defaultMode": 420
+                                }
+                            },
+                            {
+                                "name": "custom",
+                                "configMap": {
+                                    "name": "${APPLICATION_NAME}-css",
                                     "defaultMode": 420
                                 }
                             }
